@@ -16,5 +16,5 @@
     width: calc(200vw + 2rem);
     gap: 2rem;
     transform: translateX(calc(-100vw - 2rem));
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
