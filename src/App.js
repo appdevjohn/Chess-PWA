@@ -3,6 +3,7 @@ import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 
 import './App.css';
+import refreshImg from './icons/restart.png';
 
 
 function App() {
@@ -93,7 +94,7 @@ function App() {
         if (oldGameState) {
             setIsResettingBoard(true);
             setGame(prevState => {
-                const gameCopy = {...prevState};
+                const gameCopy = { ...prevState };
                 gameCopy.reset();
                 return gameCopy;
             });
@@ -150,7 +151,7 @@ function App() {
                 boardWidth={boardWidth}
                 position={game.fen()}
                 onPieceDrop={pieceDroppedHandler}
-                snapToCursor={false}
+                snapToCursor={true}
                 animationDuration={game.history().length === 0 ? 0 : 300}
                 key='main'
             />
@@ -162,7 +163,7 @@ function App() {
                 boardOrientation={oldGameState.color}
                 boardWidth={boardWidth}
                 position={oldGameState.fen}
-                snapToCursor={false}
+                snapToCursor={true}
                 animationDuration={0}
                 key='animated'
             />
@@ -171,8 +172,15 @@ function App() {
 
     return (
         <div className="App">
-            <button style={{ position: 'absolute', zIndex: 2 }} onClick={resetGameHandler}>Reset</button>
-            <div className={isResettingBoard ? 'chessboard-container tossed-game' : 'chessboard-container'}>{chessBoards}</div>
+            <header className='header'>
+                <button className='button' onClick={resetGameHandler}><img src={refreshImg} alt='New Game' /></button>
+            </header>
+            <div className='chessboard-cell'>
+                <div
+                    className={isResettingBoard ? 'chessboard-container tossed-game' : 'chessboard-container'}>
+                    {chessBoards}
+                </div>
+            </div>
         </div>
     );
 }
