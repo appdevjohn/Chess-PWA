@@ -1,11 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #283228;
+}
+
 .App {
-    position: relative;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.chessboard-cell {
+    margin: 3rem 0;
+    width: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 .chessboard-container {
-    position: absolute;
     left: 0;
-    height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -14,7 +26,36 @@
 
 .tossed-game {
     width: calc(200vw + 2rem);
-    gap: 2rem;
+    column-gap: 2rem;
     transform: translateX(calc(-100vw - 2rem));
     transition: transform 0.5s ease-in-out;
+}
+
+.header {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    background-color: transparent;
+}
+
+.button {
+    color: black;
+    width: 44px;
+    height: 44px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.button:active {
+    opacity: 0.5;
+}
+
+button > img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
