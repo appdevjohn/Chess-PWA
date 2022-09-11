@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
+import { Chessboard } from 'react-chessboard';
+import Spinner from './components/Spinner';
 
 import './App.css';
-import refreshImg from './icons/restart.png';
 
 
 function App() {
@@ -172,14 +172,20 @@ function App() {
 
     return (
         <div className="App">
-            <header className='header'>
-                <button className='button' onClick={resetGameHandler}><img src={refreshImg} alt='New Game' /></button>
-            </header>
-            <div className='chessboard-cell'>
-                <div
-                    className={isResettingBoard ? 'chessboard-container tossed-game' : 'chessboard-container'}>
-                    {chessBoards}
+            <div className='game'>
+                <div className='info-cell info-cell__opponent'>
+                    <Spinner hidden={!game || game.turn() === playerColor || game.game_over()} />
                 </div>
+                <div className='chessboard-cell'>
+                    <div
+                        className={isResettingBoard ? 'chessboard-container tossed-game-container' : 'chessboard-container'}>
+                        {chessBoards}
+                    </div>
+                </div>
+                <div className='info-cell info-cell__player'></div>
+            </div>
+            <div className='toolbar'>
+                <button className='toolbar__reset-button' onClick={resetGameHandler}>New</button>
             </div>
         </div>
     );
