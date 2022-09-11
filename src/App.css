@@ -1,38 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #283228;
+}
+
 .App {
-  text-align: center;
+    position: relative;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.game {
+    display: grid;
+    grid-template-rows: 2rem auto 2rem;
+    margin: 3rem 0;
+    width: 100%;
+    overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.info-cell {
+    color: white;
+    padding: 4px 8px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.info-cell__opponent {
+    display: flex;
+    flex-direction: row-reverse;
 }
 
-.App-link {
-  color: #61dafb;
+.chessboard-cell {
+    aspect-ratio: 1 / 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chessboard-container {
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.tossed-game-container {
+    width: calc(200vw + 2rem);
+    column-gap: 2rem;
+    transform: translateX(calc(-100vw - 2rem));
+    transition: transform 0.5s ease-in-out;
+}
+
+.toolbar {
+    position: fixed;
+    padding: 8px 4px calc(env(safe-area-inset-bottom) + 8px) 4px;
+    bottom: 0;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.toolbar__reset-button {
+    color: #283228;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 2.5rem;
+    height: 2.5rem;
+    text-align: center;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    text-transform: uppercase;
+}
+
+.toolbar__reset-button:active {
+    opacity: 0.5;
+}
+
+button > img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
 }
