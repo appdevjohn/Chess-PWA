@@ -1,0 +1,41 @@
+import styled from 'styled-components';
+
+const Container = styled.div`
+position: fixed;
+padding: 8px 4px calc(env(safe-area-inset-bottom) + 8px) 4px;
+bottom: 0;
+width: 100%;
+background-color: transparent;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+`;
+
+const ResetButton = styled.button`
+color: #283228;
+font-size: 0.75rem;
+font-weight: 700;
+width: 2.5rem;
+height: 2.5rem;
+text-align: center;
+background-color: white;
+border: none;
+cursor: pointer;
+padding: 0;
+border: none;
+border-radius: 8px;
+text-transform: uppercase;
+
+&:active {
+    opacity: 0.5;
+}
+`;
+
+const Toolbar = ({ resetGameHandler }) => (
+    <Container>
+        <ResetButton onClick={resetGameHandler}>New</ResetButton>
+    </Container>
+)
+
+export default Toolbar;
