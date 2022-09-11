@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import chessAPI from '../util/chessAPI';
 import { Chess } from 'chess.js';
 
 const useGame = () => {
@@ -32,17 +33,14 @@ const useGame = () => {
         // If opponent's move, hit the API for a move.
         if (game.turn() !== playerColor && !game.game_over()) {
             // Call API to get next move.
-            fetch('http://localhost:8000/suggest-move', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    'board_position': game.fen()
-                })
+            const controller = new AbortController();
+
+            chessAPI.post('/suggest-move', { 
+                'board_position': game.fen() 
+            }, {
+                signal: controller.signal
             }).then(response => {
-                return response.json();
-            }).then(result => {
+                const result = response.data;
                 if (!result) { return; }
 
                 const bestMove = {
@@ -56,6 +54,10 @@ const useGame = () => {
             }).catch(error => {
                 console.error(error);
             });
+
+            return () => {
+                controller.abort();
+            }
         }
 
         // After the piece animates, display an alert if applicable.
