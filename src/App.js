@@ -21,9 +21,6 @@ function App() {
     const [playerColor, setPlayerColor] = useState();
     const playerColorFull = playerColor === 'w' ? 'white' : 'black';
 
-    if (game) {
-    }
-
     // Manages the width of the board in pixels.
     useEffect(() => {
         const resizeBoard = () => {
