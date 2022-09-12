@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Chessboard } from 'react-chessboard';
 import Spinner from './Spinner';
+import pieces from '../util/pieces';
 
 const GameContainer = styled.div`
 display: grid;
@@ -96,6 +97,7 @@ const Game = ({
                 customSquareStyles={moveOptionsStyles}
                 snapToCursor={true}
                 animationDuration={game.history().length === 0 ? 0 : 300}
+                customPieces={pieces}
                 key='main'
             />
         )
