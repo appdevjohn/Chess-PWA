@@ -14,6 +14,9 @@ const useGame = () => {
     const [playerColor, setPlayerColor] = useState();
     const playerColorFull = playerColor === 'w' ? 'white' : 'black';
 
+    const [focusedSquare, setFocusedSquare] = useState();
+    const focusedSquareLegalMoves = focusedSquare ? game.moves({ square: focusedSquare, verbose: true }) : [];
+
     // Manages what happens after each the game state changes.
     useEffect(() => {
         if (oldGameState) { return }
@@ -35,8 +38,8 @@ const useGame = () => {
             // Call API to get next move.
             const controller = new AbortController();
 
-            chessAPI.post('/suggest-move', { 
-                'board_position': game.fen() 
+            chessAPI.post('/suggest-move', {
+                'board_position': game.fen()
             }, {
                 signal: controller.signal
             }).then(response => {
@@ -121,14 +124,46 @@ const useGame = () => {
         return validMove !== null;
     }
 
+    // Handles the event where a piece is tapped.
+    const squareTappedHandler = square => {
+        if (!square) {
+            setFocusedSquare(undefined);
+            return null;
+        }
+
+        const pieceOnSquare = game.get(square);
+
+        if (focusedSquare && pieceOnSquare) {
+            setFocusedSquare(square);
+            return null;
+
+        } else if (focusedSquare) {
+            const move = {
+                from: focusedSquare,
+                to: square
+            }
+
+            const validMove = makeMove(move);
+            setFocusedSquare(undefined);
+            return validMove !== null;
+
+        } else if (pieceOnSquare) {
+            setFocusedSquare(square);
+            return null;
+        }
+    }
+
     return {
         game,
         oldGameState,
         isResettingBoard,
         playerColor,
         playerColorFull,
+        focusedSquare,
+        focusedSquareLegalMoves,
         resetGameHandler,
-        pieceDroppedHandler
+        pieceDroppedHandler,
+        squareTappedHandler
     }
 }
 

@@ -10,8 +10,11 @@ function App() {
         isResettingBoard,
         playerColor,
         playerColorFull,
+        focusedSquare,
+        focusedSquareLegalMoves,
         resetGameHandler,
-        pieceDroppedHandler
+        pieceDroppedHandler,
+        squareTappedHandler
     } = useGame();
 
     return (
@@ -22,8 +25,11 @@ function App() {
                 isResettingBoard={isResettingBoard}
                 playerColor={playerColor}
                 playerColorFull={playerColorFull}
+                focusedSquare={focusedSquare}
+                focusedSquareLegalMoves={focusedSquareLegalMoves}
                 resetGameHandler={resetGameHandler}
-                pieceDroppedHandler={pieceDroppedHandler} />
+                pieceDroppedHandler={pieceDroppedHandler}
+                squareTappedHandler={squareTappedHandler} />
             <Toolbar resetGameHandler={resetGameHandler} />
         </div>
     );
