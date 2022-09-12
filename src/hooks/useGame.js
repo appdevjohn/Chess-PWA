@@ -129,6 +129,9 @@ const useGame = () => {
         if (!square) {
             setFocusedSquare(undefined);
             return null;
+        } else if (focusedSquare === square) {
+            setFocusedSquare(undefined);
+            return null;
         }
 
         const pieceOnSquare = game.get(square);

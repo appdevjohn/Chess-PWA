@@ -53,9 +53,9 @@ const Game = ({
     // The board width in pixels, as required by react-chessboard.
     const [boardWidth, setBoardWidth] = useState(window.visualViewport.width);
 
-    const moveOptionsStyles = {};
+    const squareStyles = {};
     focusedSquareLegalMoves.forEach(m => {
-        moveOptionsStyles[m.to] = {
+        squareStyles[m.to] = {
             background:
                 game.get(m.to) && game.get(m.to).color !== game.get(focusedSquare).color
                     ? 'radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)'
@@ -63,6 +63,11 @@ const Game = ({
             borderRadius: '50%'
         }
     });
+    if (focusedSquare) {
+        squareStyles[focusedSquare] = {
+            background: 'rgba(255, 255, 0, 0.4)'
+        }
+    }
 
     // Manages the width of the board in pixels.
     useEffect(() => {
@@ -93,7 +98,7 @@ const Game = ({
                 onPieceDrop={pieceDroppedHandler}
                 onPieceDragBegin={() => squareTappedHandler(null)}
                 onSquareClick={squareTappedHandler}
-                customSquareStyles={moveOptionsStyles}
+                customSquareStyles={squareStyles}
                 snapToCursor={true}
                 animationDuration={game.history().length === 0 ? 0 : 300}
                 key='main'
