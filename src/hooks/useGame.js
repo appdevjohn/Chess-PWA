@@ -129,14 +129,20 @@ const useGame = () => {
         if (!square) {
             setFocusedSquare(undefined);
             return null;
-        } else if (focusedSquare === square) {
-            setFocusedSquare(undefined);
-            return null;
         }
 
         const pieceOnSquare = game.get(square);
 
-        if (focusedSquare && pieceOnSquare) {
+        if (
+            focusedSquare === square ||
+            (!focusedSquare && pieceOnSquare && pieceOnSquare.color !== playerColor) ||
+            game.turn() !== playerColor
+        ) {
+            setFocusedSquare(undefined);
+            return null;
+        }
+
+        if ((!focusedSquare && pieceOnSquare) || (focusedSquare && pieceOnSquare && pieceOnSquare.color === playerColor)) {
             setFocusedSquare(square);
             return null;
 
@@ -156,6 +162,11 @@ const useGame = () => {
         }
     }
 
+    const isPieceMovableHandler = ({ sourceSquare }) => {
+        const pieceOnSquare = game.get(sourceSquare);
+        return pieceOnSquare && pieceOnSquare.color === playerColor && game.turn() === playerColor;
+    }
+
     return {
         game,
         oldGameState,
@@ -166,7 +177,8 @@ const useGame = () => {
         focusedSquareLegalMoves,
         resetGameHandler,
         pieceDroppedHandler,
-        squareTappedHandler
+        squareTappedHandler,
+        isPieceMovableHandler,
     }
 }
 

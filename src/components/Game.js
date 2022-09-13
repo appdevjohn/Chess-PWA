@@ -48,7 +48,8 @@ const Game = ({
     pieceDroppedHandler,
     focusedSquare,
     focusedSquareLegalMoves,
-    squareTappedHandler }) => {
+    squareTappedHandler,
+    isPieceMovableHandler }) => {
 
     // The board width in pixels, as required by react-chessboard.
     const [boardWidth, setBoardWidth] = useState(window.visualViewport.width);
@@ -101,6 +102,7 @@ const Game = ({
                 customSquareStyles={squareStyles}
                 snapToCursor={true}
                 animationDuration={game.history().length === 0 ? 0 : 300}
+                isDraggablePiece={isPieceMovableHandler}
                 key='main'
             />
         )
