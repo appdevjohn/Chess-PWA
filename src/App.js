@@ -14,7 +14,8 @@ function App() {
         focusedSquareLegalMoves,
         resetGameHandler,
         pieceDroppedHandler,
-        squareTappedHandler
+        squareTappedHandler,
+        isPieceMovableHandler
     } = useGame();
 
     return (
@@ -29,7 +30,8 @@ function App() {
                 focusedSquareLegalMoves={focusedSquareLegalMoves}
                 resetGameHandler={resetGameHandler}
                 pieceDroppedHandler={pieceDroppedHandler}
-                squareTappedHandler={squareTappedHandler} />
+                squareTappedHandler={squareTappedHandler}
+                isPieceMovableHandler={isPieceMovableHandler} />
             <Toolbar resetGameHandler={resetGameHandler} />
         </div>
     );
