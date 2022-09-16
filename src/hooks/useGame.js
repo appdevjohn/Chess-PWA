@@ -48,7 +48,8 @@ const useGame = () => {
 
                 const bestMove = {
                     from: result['best_move'].substring(0, 2),
-                    to: result['best_move'].substring(2, 4)
+                    to: result['best_move'].substring(2, 4),
+                    promotion: 'q'
                 }
                 const gameCopy = { ...game };
                 gameCopy.move(bestMove);
@@ -117,7 +118,8 @@ const useGame = () => {
     const pieceDroppedHandler = (sourceSquare, targetSquare) => {
         const move = {
             from: sourceSquare,
-            to: targetSquare
+            to: targetSquare,
+            promotion: 'q'
         }
 
         const validMove = makeMove(move);
@@ -149,7 +151,8 @@ const useGame = () => {
         } else if (focusedSquare) {
             const move = {
                 from: focusedSquare,
-                to: square
+                to: square,
+                promotion: 'q'
             }
 
             const validMove = makeMove(move);
