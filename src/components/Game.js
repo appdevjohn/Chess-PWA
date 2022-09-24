@@ -24,6 +24,8 @@ flex-direction: row-reverse;
 const PlayerInfo = styled(InfoContainer)``;
 
 const ChessboardCell = styled.div`
+width: 100vw;
+overflow: hidden;
 aspect-ratio: 1 / 1;
 `;
 

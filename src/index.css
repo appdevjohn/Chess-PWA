@@ -10,6 +10,8 @@ body {
     background-color: #283228;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+    -webkit-touch-callout:none;
 }
 
 code {
@@ -22,4 +24,15 @@ button>img {
     width: 100%;
     object-fit: contain;
     object-position: center;
+}
+
+.relative {
+    position: relative;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }

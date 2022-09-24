@@ -1,6 +1,7 @@
 import useGame from './hooks/useGame';
 import Game from './components/Game';
-import Toolbar from './components/Toolbar';
+// import Toolbar from './components/Toolbar';
+import ResetBubble from './components/ResetBubble';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
     } = useGame();
 
     return (
-        <div style={{ position: 'relative' }}>
+        <div className='relative'>
             <Game
                 game={game}
                 oldGameState={oldGameState}
@@ -32,7 +33,8 @@ function App() {
                 pieceDroppedHandler={pieceDroppedHandler}
                 squareTappedHandler={squareTappedHandler}
                 isPieceMovableHandler={isPieceMovableHandler} />
-            <Toolbar resetGameHandler={resetGameHandler} />
+            <div className='center-content'><ResetBubble onBubblePopped={resetGameHandler} /></div>
+            {/* <Toolbar resetGameHandler={resetGameHandler} /> */}
         </div>
     );
 }
