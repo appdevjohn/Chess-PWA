@@ -64,15 +64,6 @@ const useGame = () => {
             }
         }
 
-        // After the piece animates, display an alert if applicable.
-        setTimeout(() => {
-            if (game.turn() === playerColor && game.in_checkmate()) {
-                alert('Checkmate');
-            } else if (game.turn() === playerColor && game.in_check()) {
-                alert('Check');
-            }
-        }, 300)
-
     }, [game, playerColor, playerColorFull, oldGameState])
 
     // The DOM has updated with the new chess board. It can now be animated.
@@ -178,6 +169,10 @@ const useGame = () => {
         playerColorFull,
         focusedSquare,
         focusedSquareLegalMoves,
+        opponentCheck: game && game.turn() !== playerColor && game.in_check(),
+        playerCheck: game && game.turn() === playerColor && game.in_check(),
+        opponentCheckmate: game && game.turn() !== playerColor && game.in_checkmate(),
+        playerCheckmate: game && game.turn() === playerColor && game.in_checkmate(),
         resetGameHandler,
         pieceDroppedHandler,
         squareTappedHandler,
