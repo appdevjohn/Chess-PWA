@@ -3,34 +3,38 @@ import styled, { keyframes } from 'styled-components';
 
 const pop = keyframes`
 0% {
-    border: 4px solid white;
+    border: 20px solid white;
     background-color: rgba(255, 255, 255, 1);
-    transform: scale(5);
+    width: 80px;
+    height: 80px;
+    transform: translateY(-32px);
 }
 
 50% {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: transparent;
 }
 
 100% {
     border: 1px solid white;
     background-color: transparent;
-    transform: scale(12);
+    transform: translateY(-88px);
+    width: 192px;
+    height: 192px;
 }
 `;
 
 const Bubble = styled.div`
 display: inline-block;
 margin: auto;
-width: 16px;
-height: 16px;
-border-radius: 8px;
+width: ${props => props.growing ? '80px' : '16px'};
+height: ${props => props.growing ? '80px' : '16px'};
+border-radius: 100px;
 background-color: ${props => props.growing ? 'white' : 'black'};
-transition: ${props => props.popping ? 'inherit' : 'transform 1s ease;'}
-transform: ${props => props.growing ? 'scale(5)' : 'inherit'};
+transform: ${props => props.growing ? 'translateY(-32px)' : 'inherit'};
+transition: ${props => props.popping ? 'inherit' : 'width 1s ease, height 1s ease, transform 1s ease'};
 animation-name: ${props => props.popping ? pop : 'inherit'};
 animation-duration: 0.25s;
-animation-timing-function: linear;
+animation-timing-function: ease-out;
 animation-delay: 0s;
 pointer-events: ${props => props.popping ? 'none' : 'inherit'};
 user-select: ${props => props.popping ? 'none' : 'inherit'};
