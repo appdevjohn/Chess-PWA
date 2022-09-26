@@ -4,10 +4,9 @@ import styled, { keyframes } from 'styled-components';
 const pop = keyframes`
 0% {
     border: 20px solid white;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: white;
     width: 120px;
     height: 120px;
-    transform: translate(-52px, -52px);
 }
 
 50% {
@@ -17,7 +16,6 @@ const pop = keyframes`
 100% {
     border: 1px solid white;
     background-color: transparent;
-    transform: translate(-88px, -88px);
     width: 192px;
     height: 192px;
 }
@@ -25,22 +23,28 @@ const pop = keyframes`
 
 const Bubble = styled.div`
 display: inline-block;
-position: fixed;
-top: ${props => `${props.y - 8}px` || '0'};
-left: ${props => `${props.x - 8}px` || '0'};
-margin: auto;
 width: ${props => props.growing ? '120px' : '16px'};
 height: ${props => props.growing ? '120px' : '16px'};
 border-radius: 100px;
 background-color: ${props => props.growing ? 'white' : 'transparent'};
-transform: ${props => props.growing ? 'translate(-52px, -52px)' : 'inherit'};
-transition: ${props => props.popping ? 'inherit' : 'width 1s ease, height 1s ease, transform 1s ease'};
+transition: ${props => props.popping ? 'inherit' : 'width 1s ease, height 1s ease'};
 animation-name: ${props => props.popping ? pop : 'inherit'};
 animation-duration: 0.25s;
 animation-timing-function: ease-out;
 animation-delay: 0s;
 pointer-events: ${props => props.popping ? 'none' : 'inherit'};
 user-select: ${props => props.popping ? 'none' : 'inherit'};
+`;
+
+const Container = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+position: fixed;
+width: 192px;
+height: 192px;
+top: ${props => `${props.y - 96}px` || '0'};
+left: ${props => `${props.x - 96}px` || '0'};
 `;
 
 const ResetBubble = ({ onBubblePopped, coordinates }) => {
@@ -80,12 +84,9 @@ const ResetBubble = ({ onBubblePopped, coordinates }) => {
     }, [popping])
 
     return (
-        <Bubble
-            growing={touched}
-            popping={popping}
-            x={coordinates.x}
-            y={coordinates.y}
-        />
+        <Container x={coordinates.x} y={coordinates.y}>
+            <Bubble growing={touched} popping={popping} />
+        </Container>
     )
 }
 
