@@ -7,7 +7,7 @@ import CheckIndicator from './CheckIndicator';
 const GameContainer = styled.div`
 display: grid;
 grid-template-rows: 2.5rem auto 2.5rem;
-margin: 3rem 0;
+margin-top: 3rem;
 width: 100%
 overflow: hidden;
 `;
@@ -25,6 +25,8 @@ const OpponentInfo = styled(InfoContainer)``;
 const PlayerInfo = styled(InfoContainer)``;
 
 const ChessboardCell = styled.div`
+width: 100vw;
+overflow: hidden;
 aspect-ratio: 1 / 1;
 `;
 
