@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Chessboard } from 'react-chessboard';
 import Spinner from './Spinner';
+import CheckIndicator from './CheckIndicator';
 
 const GameContainer = styled.div`
 display: grid;
-grid-template-rows: 2rem auto 2rem;
+grid-template-rows: 2.5rem auto 2.5rem;
 margin-top: 3rem;
 width: 100%
 overflow: hidden;
@@ -13,13 +14,13 @@ overflow: hidden;
 
 const InfoContainer = styled.div`
 color: white;
-padding: 4px 8px;
+padding: 8px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
 `;
 
-const OpponentInfo = styled(InfoContainer)`
-display: flex;
-flex-direction: row-reverse;
-`;
+const OpponentInfo = styled(InfoContainer)``;
 
 const PlayerInfo = styled(InfoContainer)``;
 
@@ -50,6 +51,10 @@ const Game = ({
     pieceDroppedHandler,
     focusedSquare,
     focusedSquareLegalMoves,
+    opponentCheck,
+    playerCheck,
+    opponentCheckmate,
+    playerCheckmate,
     squareTappedHandler,
     isPieceMovableHandler }) => {
 
@@ -125,6 +130,7 @@ const Game = ({
     return (
         <GameContainer>
             <OpponentInfo>
+                <CheckIndicator check={opponentCheck} checkmate={opponentCheckmate} />
                 <Spinner hidden={!game || game.turn() === playerColor || game.game_over()} />
             </OpponentInfo>
             <ChessboardCell>
@@ -132,7 +138,9 @@ const Game = ({
                     {chessBoards}
                 </ChessboardContainer>
             </ChessboardCell>
-            <PlayerInfo></PlayerInfo>
+            <PlayerInfo>
+                <CheckIndicator check={playerCheck} checkmate={playerCheckmate} />
+            </PlayerInfo>
         </GameContainer>
     )
 }

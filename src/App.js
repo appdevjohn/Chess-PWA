@@ -12,6 +12,10 @@ function App() {
         playerColorFull,
         focusedSquare,
         focusedSquareLegalMoves,
+        opponentCheck,
+        playerCheck,
+        opponentCheckmate,
+        playerCheckmate,
         resetGameHandler,
         pieceDroppedHandler,
         squareTappedHandler,
@@ -28,6 +32,10 @@ function App() {
                 playerColorFull={playerColorFull}
                 focusedSquare={focusedSquare}
                 focusedSquareLegalMoves={focusedSquareLegalMoves}
+                opponentCheck={opponentCheck}
+                playerCheck={playerCheck}
+                opponentCheckmate={opponentCheckmate}
+                playerCheckmate={playerCheckmate}
                 resetGameHandler={resetGameHandler}
                 pieceDroppedHandler={pieceDroppedHandler}
                 squareTappedHandler={squareTappedHandler}
