@@ -6,7 +6,7 @@ import Spinner from './Spinner';
 const GameContainer = styled.div`
 display: grid;
 grid-template-rows: 2rem auto 2rem;
-margin: 3rem 0;
+margin-top: 3rem;
 width: 100%
 overflow: hidden;
 `;
