@@ -39,7 +39,7 @@ const useGame = () => {
             const controller = new AbortController();
 
             chessAPI.post('/suggest-move', {
-                'board_position': game.fen()
+                'fen': game.fen()
             }, {
                 signal: controller.signal
             }).then(response => {
