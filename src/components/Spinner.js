@@ -15,6 +15,11 @@ animation-name: ${rotate};
 animation-duration: 0.75s;
 animation-iteration-count: infinite;
 animation-timing-function: linear;
+
+@media (min-width: 40rem) {
+    height: 32px;
+    width: 32px;
+}
 `;
 
 const Arc = styled.circle`

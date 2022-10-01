@@ -1,5 +1,15 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import ResetBubble from './ResetBubble';
+
+const Area = styled.div`
+height: 8rem;
+position: relative;
+
+@media (min-width: 40rem) {
+    display: none;
+}
+`;
 
 const ResetBubbleArea = ({ onBubblePopped }) => {
     const [coordinates, setCoordinates] = useState();
@@ -22,14 +32,13 @@ const ResetBubbleArea = ({ onBubblePopped }) => {
     }
 
     return (
-        <div
-            style={{ height: '8rem', position: 'relative' }}
+        <Area
             onMouseDown={mouseDownHandler}
             onMouseUp={endHandler}
             onTouchStart={touchStartHandler}
             onTouchEnd={endHandler}>
                 {coordinates && <ResetBubble onBubblePopped={onBubblePopped} coordinates={coordinates} />}
-        </div>
+        </Area>
     )
 }
 

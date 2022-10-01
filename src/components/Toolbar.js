@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+display: none;
 position: fixed;
 padding: 8px 4px calc(env(safe-area-inset-bottom) + 8px) 4px;
 bottom: 0;
 width: 100%;
 background-color: transparent;
-display: flex;
 flex-direction: row;
 justify-content: space-around;
 align-items: center;
+
+@media (min-width: 40rem) {
+    display: flex;
+    position: static;
+}
 `;
 
 const ResetButton = styled.button`
