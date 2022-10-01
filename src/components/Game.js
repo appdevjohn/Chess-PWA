@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Chessboard } from 'react-chessboard';
 import Spinner from './Spinner';
@@ -7,9 +7,16 @@ import CheckIndicator from './CheckIndicator';
 const GameContainer = styled.div`
 display: grid;
 grid-template-rows: 2.5rem auto 2.5rem;
+margin: auto;
 margin-top: 3rem;
 width: 100%
 overflow: hidden;
+max-width: 40rem;
+position: relative;
+
+@media (min-width: 40rem) {
+    grid-template-rows: 3rem auto 3rem;
+}
 `;
 
 const InfoContainer = styled.div`
@@ -28,6 +35,10 @@ const ChessboardCell = styled.div`
 width: 100vw;
 overflow: hidden;
 aspect-ratio: 1 / 1;
+
+@media (min-width: 40rem) {
+    width: 40rem;
+}
 `;
 
 const ChessboardContainer = styled.div`
@@ -40,6 +51,11 @@ width: ${props => props.isResettingBoard ? 'calc(200vw + 2rem)' : 'initial'};
 column-gap: ${props => props.isResettingBoard ? '2rem' : 'initial'};
 transform: ${props => props.isResettingBoard ? 'translateX(calc(-100vw - 2rem))' : 'initial'};
 transition: ${props => props.isResettingBoard ? 'transform 0.5s ease-in-out' : 'initial'};
+
+@media (min-width: 40rem) {
+    width: ${props => props.isResettingBoard ? 'calc(80rem + 2rem)' : 'initial'};
+    transform: ${props => props.isResettingBoard ? 'translateX(calc(-40rem - 2rem))' : 'initial'};
+}
 `;
 
 const Game = ({
@@ -59,7 +75,8 @@ const Game = ({
     isPieceMovableHandler }) => {
 
     // The board width in pixels, as required by react-chessboard.
-    const [boardWidth, setBoardWidth] = useState(window.visualViewport.width);
+    const [boardWidth, setBoardWidth] = useState(window.visualViewport.width < 640 ? window.visualViewport.width : 640);
+    const boardAreaRef = useRef();
 
     const squareStyles = {};
     focusedSquareLegalMoves.forEach(m => {
@@ -79,17 +96,9 @@ const Game = ({
 
     // Manages the width of the board in pixels.
     useEffect(() => {
-        const resizeBoard = () => {
-            if (window.visualViewport.width < window.visualViewport.height) {
-                setBoardWidth(window.visualViewport.width);
-            } else {
-                setBoardWidth(window.visualViewport.height);
-            }
-        }
-
+        const resizeBoard = () => setBoardWidth(boardAreaRef.current.offsetWidth);
         window.addEventListener('resize', resizeBoard);
         return () => window.removeEventListener('resize', resizeBoard)
-
     }, [])
 
     // Chessboard array. If resetting a game, a board with the resigned game
@@ -133,7 +142,7 @@ const Game = ({
                 <CheckIndicator check={opponentCheck} checkmate={opponentCheckmate} />
                 <Spinner hidden={!game || game.turn() === playerColor || game.game_over()} />
             </OpponentInfo>
-            <ChessboardCell>
+            <ChessboardCell ref={boardAreaRef}>
                 <ChessboardContainer isResettingBoard={isResettingBoard}>
                     {chessBoards}
                 </ChessboardContainer>
