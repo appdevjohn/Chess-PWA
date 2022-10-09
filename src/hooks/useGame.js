@@ -158,7 +158,7 @@ const useGame = () => {
 
     const isPieceMovableHandler = ({ sourceSquare }) => {
         const pieceOnSquare = game.get(sourceSquare);
-        return pieceOnSquare && pieceOnSquare.color === playerColor && game.turn() === playerColor;
+        return pieceOnSquare && pieceOnSquare.color === playerColor && game && !game.game_over() && game.turn() === playerColor;
     }
 
     return {
@@ -173,6 +173,9 @@ const useGame = () => {
         playerCheck: game && game.turn() === playerColor && game.in_check(),
         opponentCheckmate: game && game.turn() !== playerColor && game.in_checkmate(),
         playerCheckmate: game && game.turn() === playerColor && game.in_checkmate(),
+        opponentStalemate: game && game.turn() !== playerColor && game.in_stalemate(),
+        playerStalemate: game && game.turn() === playerColor && game.in_stalemate(),
+        isDrawGame: game && game.in_draw(),
         resetGameHandler,
         pieceDroppedHandler,
         squareTappedHandler,
