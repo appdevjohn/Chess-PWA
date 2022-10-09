@@ -17,6 +17,9 @@ function App() {
         playerCheck,
         opponentCheckmate,
         playerCheckmate,
+        opponentStalemate,
+        playerStalemate,
+        isDrawGame,
         resetGameHandler,
         pieceDroppedHandler,
         squareTappedHandler,
@@ -37,6 +40,9 @@ function App() {
                 playerCheck={playerCheck}
                 opponentCheckmate={opponentCheckmate}
                 playerCheckmate={playerCheckmate}
+                opponentStalemate={opponentStalemate}
+                playerStalemate={playerStalemate}
+                isDrawGame={isDrawGame}
                 resetGameHandler={resetGameHandler}
                 pieceDroppedHandler={pieceDroppedHandler}
                 squareTappedHandler={squareTappedHandler}

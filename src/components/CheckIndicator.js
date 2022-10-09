@@ -21,8 +21,17 @@ transition: transform 0.3s ease, opacity 0.3s ease;
 }
 `;
 
-const CheckIndicator = ({ check, checkmate }) => (
-    <Indicator showing={check || checkmate}>{checkmate ? 'Checkmate' : 'Check'}</Indicator>
-)
+const CheckIndicator = ({ check, checkmate, stalemate, draw }) => {
+    let text = 'Draw';
+    if (stalemate) {
+        text = 'Stalemate';
+    } else if (checkmate) {
+        text = 'Checkmate';
+    } else if (check) {
+        text = 'Check';
+    }
+    
+    return <Indicator showing={check || checkmate || stalemate || draw}>{text}</Indicator>
+}
 
 export default CheckIndicator;

@@ -71,6 +71,9 @@ const Game = ({
     playerCheck,
     opponentCheckmate,
     playerCheckmate,
+    opponentStalemate,
+    playerStalemate,
+    isDrawGame,
     squareTappedHandler,
     isPieceMovableHandler }) => {
 
@@ -139,7 +142,7 @@ const Game = ({
     return (
         <GameContainer>
             <OpponentInfo>
-                <CheckIndicator check={opponentCheck} checkmate={opponentCheckmate} />
+                <CheckIndicator check={opponentCheck} checkmate={opponentCheckmate} stalemate={opponentStalemate} draw={isDrawGame} />
                 <Spinner hidden={!game || game.turn() === playerColor || game.game_over()} />
             </OpponentInfo>
             <ChessboardCell ref={boardAreaRef}>
@@ -148,7 +151,7 @@ const Game = ({
                 </ChessboardContainer>
             </ChessboardCell>
             <PlayerInfo>
-                <CheckIndicator check={playerCheck} checkmate={playerCheckmate} />
+                <CheckIndicator check={playerCheck} checkmate={playerCheckmate} stalemate={playerStalemate} draw={isDrawGame} />
             </PlayerInfo>
         </GameContainer>
     )
