@@ -1,36 +1,45 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-display: none;
-position: fixed;
-padding: 8px 4px calc(env(safe-area-inset-bottom) + 8px) 4px;
+display: flex;
+position: static;
+padding: 8px;
 bottom: 0;
 width: 100%;
 background-color: transparent;
 flex-direction: row;
-justify-content: space-around;
+justify-content: space-between;
 align-items: center;
-
-@media (min-width: 40rem) {
-    display: flex;
-    position: static;
-}
 `;
 
-const ResetButton = styled.button`
+const BarSide = styled.div`
+display: inline-block;
+`;
+
+const LeftSide = styled(BarSide)`
+text-align: left;
+`;
+
+const RightSide = styled(BarSide)`
+text-align: right;
+`;
+
+const Button = styled.button`
 color: #283228;
 font-size: 0.75rem;
 font-weight: 700;
-width: 2.5rem;
-height: 2.5rem;
+width: 2.75rem;
+height: 2.75rem;
 text-align: center;
-background-color: white;
+background-color: #ededed;
+box-shadow: 1px 2px 2px #cccccc;
 border: none;
 cursor: pointer;
 padding: 0;
 border: none;
-border-radius: 8px;
+border-radius: 1.375rem;
 text-transform: uppercase;
+margin: 0 16px;
 
 &:active {
     opacity: 0.5;
@@ -39,7 +48,14 @@ text-transform: uppercase;
 
 const Toolbar = ({ resetGameHandler }) => (
     <Container>
-        <ResetButton onClick={resetGameHandler}>New</ResetButton>
+        <LeftSide>
+            <Button onClick={resetGameHandler}>New</Button>
+            <Button onClick={() => console.log('undo')}>Undo</Button>
+        </LeftSide>
+        <RightSide>
+            <Button onClick={() => console.log('suggest move')}>Sug</Button>
+            <Button onClick={() => console.log('show previous')}>SWPV</Button>
+        </RightSide>
     </Container>
 )
 

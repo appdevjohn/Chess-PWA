@@ -1,8 +1,8 @@
 import useGame from './hooks/useGame';
 import Game from './components/Game';
 import ResetBubbleArea from './components/ResetBubbleArea';
+import Drawer from './components/Drawer';
 import Toolbar from './components/Toolbar';
-
 
 function App() {
     const {
@@ -48,7 +48,9 @@ function App() {
                 squareTappedHandler={squareTappedHandler}
                 isPieceMovableHandler={isPieceMovableHandler} />
             <ResetBubbleArea onBubblePopped={resetGameHandler} />
-            <Toolbar resetGameHandler={resetGameHandler} />
+            <Drawer backgroundColor='white' borderRadius='12px'>
+                <Toolbar resetGameHandler={resetGameHandler} />
+            </Drawer>
         </div>
     );
 }
