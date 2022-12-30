@@ -46,15 +46,15 @@ margin: 0 16px;
 }
 `;
 
-const Toolbar = ({ resetGameHandler }) => (
+const Toolbar = ({ resetGameHandler, undoMoveHandler, suggestMoveHandler, showPreviousMoveHandler }) => (
     <Container>
         <LeftSide>
             <Button onClick={resetGameHandler}>New</Button>
-            <Button onClick={() => console.log('undo')}>Undo</Button>
+            <Button onClick={undoMoveHandler}>Undo</Button>
         </LeftSide>
         <RightSide>
-            <Button onClick={() => console.log('suggest move')}>Sug</Button>
-            <Button onClick={() => console.log('show previous')}>SWPV</Button>
+            <Button onClick={suggestMoveHandler}>Sug</Button>
+            <Button onClick={showPreviousMoveHandler}>SWPV</Button>
         </RightSide>
     </Container>
 )

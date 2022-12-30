@@ -10,6 +10,9 @@ const useGame = () => {
     const [oldGameState, setOldGameState] = useState();
     const [isResettingBoard, setIsResettingBoard] = useState(false);
 
+    // Temporarily store a game state to demonstrate a move suggestion or previous move.
+    const [previewGameState, setPreviewGameState] = useState();
+
     // The player's color.
     const [playerColor, setPlayerColor] = useState();
     const playerColorFull = playerColor === 'w' ? 'white' : 'black';
@@ -51,9 +54,11 @@ const useGame = () => {
                     to: result['best_move'].substring(2, 4),
                     promotion: 'q'
                 }
-                const gameCopy = { ...game };
-                gameCopy.move(bestMove);
-                setGame(gameCopy);
+                setGame(prevState => {
+                    const gameCopy = { ...prevState };
+                    gameCopy.move(bestMove);
+                    return gameCopy;
+                })
 
             }).catch(error => {
                 console.error(error);
@@ -97,11 +102,82 @@ const useGame = () => {
         });
     }
 
+    // Handles an Undo request.
+    const undoMoveHandler = () => {
+        const moves = []
+        setGame(prevState => {
+            const gameCopy = { ...prevState };
+
+            if (gameCopy.turn() === playerColor && !gameCopy.game_over()) {
+                moves.push(gameCopy.undo());
+                moves.push(gameCopy.undo());
+            } else if (gameCopy.turn() !== playerColor && !gameCopy.game_over()) {
+                moves.push(gameCopy.undo());
+            }
+
+            return gameCopy;
+        })
+
+        return moves;
+    }
+
+    // Handles a move suggestion request.
+    const suggestMoveHandler = async () => {
+        const gameCopy = new Chess()
+        gameCopy.load_pgn(game.pgn());
+        setPreviewGameState(gameCopy);
+
+        try {
+            const response = await chessAPI.post('/suggest-move', {
+                'fen': game.fen()
+            })
+
+            const result = response.data;
+            if (!result) { return; }
+
+            const bestMove = {
+                from: result['best_move'].substring(0, 2),
+                to: result['best_move'].substring(2, 4),
+                promotion: 'q'
+            }
+
+            setPreviewGameState(prevState => {
+                const gameCopy = { ...prevState };
+                gameCopy.move(bestMove);
+                return gameCopy;
+            })
+
+            setTimeout(() => {
+                setPreviewGameState();
+            }, 1000);
+
+        } catch (error) {
+            setPreviewGameState()
+        }
+    }
+
+    // Handles a request to show the previously made move.
+    const showPreviousMoveHandler = () => {
+        const gameCopy = new Chess()
+        gameCopy.load_pgn(game.pgn());
+        gameCopy.undo();
+
+        setPreviewGameState(gameCopy);
+
+        setTimeout(() => {
+            setPreviewGameState();
+        }, 1000);
+    }
+
     // Make a move. Returns true if the move is valid.
     const makeMove = move => {
-        const gameCopy = { ...game };
-        const result = gameCopy.move(move);
-        setGame(gameCopy);
+        let result;
+        setGame(prevState => {
+            const gameCopy = { ...prevState };
+            result = gameCopy.move(move);
+            return gameCopy;
+        })
+
         return result;
     }
 
@@ -129,7 +205,8 @@ const useGame = () => {
         if (
             focusedSquare === square ||
             (!focusedSquare && pieceOnSquare && pieceOnSquare.color !== playerColor) ||
-            game.turn() !== playerColor
+            game.turn() !== playerColor ||
+            previewGameState
         ) {
             setFocusedSquare(undefined);
             return null;
@@ -158,13 +235,20 @@ const useGame = () => {
 
     const isPieceMovableHandler = ({ sourceSquare }) => {
         const pieceOnSquare = game.get(sourceSquare);
-        return pieceOnSquare && pieceOnSquare.color === playerColor && game && !game.game_over() && game.turn() === playerColor;
+        return (
+            pieceOnSquare &&
+            pieceOnSquare.color === playerColor &&
+            game && !game.game_over() &&
+            game.turn() === playerColor &&
+            !previewGameState
+        )
     }
 
     return {
-        game,
+        game: game,
         oldGameState,
         isResettingBoard,
+        previewGameState,
         playerColor,
         playerColorFull,
         focusedSquare,
@@ -177,6 +261,9 @@ const useGame = () => {
         playerStalemate: game && game.turn() === playerColor && game.in_stalemate(),
         isDrawGame: game && game.in_draw(),
         resetGameHandler,
+        undoMoveHandler,
+        suggestMoveHandler,
+        showPreviousMoveHandler,
         pieceDroppedHandler,
         squareTappedHandler,
         isPieceMovableHandler,

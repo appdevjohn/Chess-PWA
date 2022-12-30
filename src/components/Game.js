@@ -62,6 +62,7 @@ const Game = ({
     game,
     oldGameState,
     isResettingBoard,
+    previewGameState,
     playerColor,
     playerColorFull,
     pieceDroppedHandler,
@@ -114,7 +115,7 @@ const Game = ({
                 id='chessboard'
                 boardOrientation={playerColorFull}
                 boardWidth={boardWidth}
-                position={game.fen()}
+                position={previewGameState ? previewGameState.fen() : game.fen()}
                 onPieceDrop={pieceDroppedHandler}
                 onPieceDragBegin={() => squareTappedHandler(null)}
                 onSquareClick={squareTappedHandler}
@@ -143,7 +144,7 @@ const Game = ({
         <GameContainer>
             <OpponentInfo>
                 <CheckIndicator check={opponentCheck} checkmate={opponentCheckmate} stalemate={opponentStalemate} draw={isDrawGame} />
-                <Spinner hidden={!game || game.turn() === playerColor || game.game_over()} />
+                <Spinner hidden={(!game || game.turn() === playerColor || game.game_over()) && !previewGameState} />
             </OpponentInfo>
             <ChessboardCell ref={boardAreaRef}>
                 <ChessboardContainer isResettingBoard={isResettingBoard}>

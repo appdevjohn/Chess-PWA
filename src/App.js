@@ -9,6 +9,7 @@ function App() {
         game,
         oldGameState,
         isResettingBoard,
+        previewGameState,
         playerColor,
         playerColorFull,
         focusedSquare,
@@ -21,6 +22,9 @@ function App() {
         playerStalemate,
         isDrawGame,
         resetGameHandler,
+        undoMoveHandler,
+        suggestMoveHandler,
+        showPreviousMoveHandler,
         pieceDroppedHandler,
         squareTappedHandler,
         isPieceMovableHandler
@@ -32,6 +36,7 @@ function App() {
                 game={game}
                 oldGameState={oldGameState}
                 isResettingBoard={isResettingBoard}
+                previewGameState={previewGameState}
                 playerColor={playerColor}
                 playerColorFull={playerColorFull}
                 focusedSquare={focusedSquare}
@@ -49,7 +54,11 @@ function App() {
                 isPieceMovableHandler={isPieceMovableHandler} />
             <ResetBubbleArea onBubblePopped={resetGameHandler} />
             <Drawer backgroundColor='white' borderRadius='12px'>
-                <Toolbar resetGameHandler={resetGameHandler} />
+                <Toolbar
+                    resetGameHandler={resetGameHandler}
+                    undoMoveHandler={undoMoveHandler}
+                    suggestMoveHandler={suggestMoveHandler}
+                    showPreviousMoveHandler={showPreviousMoveHandler} />
             </Drawer>
         </div>
     );
