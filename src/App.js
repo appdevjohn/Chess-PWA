@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import useGame from './hooks/useGame';
 import Game from './components/Game';
 import ResetBubbleArea from './components/ResetBubbleArea';
 import Drawer from './components/Drawer';
 import Toolbar from './components/Toolbar';
+import Slider from './components/Slider';
 
 function App() {
     const {
@@ -29,6 +31,8 @@ function App() {
         squareTappedHandler,
         isPieceMovableHandler
     } = useGame();
+
+    const [difficulty, setDifficulty] = useState(0.5);
 
     return (
         <div className='relative'>
@@ -59,6 +63,7 @@ function App() {
                     undoMoveHandler={undoMoveHandler}
                     suggestMoveHandler={suggestMoveHandler}
                     showPreviousMoveHandler={showPreviousMoveHandler} />
+                <Slider value={difficulty} onChange={setDifficulty} />
             </Drawer>
         </div>
     );
