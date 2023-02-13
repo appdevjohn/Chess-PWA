@@ -5,6 +5,7 @@ import { Chess } from 'chess.js';
 const useGame = () => {
     // The game state, in the chess.js format.
     const [game, setGame] = useState();
+    const [skillLevel, setSkillLevel] = useState(0.5)
 
     // To create the animation to a new game, we need to keep the old game state briefly.
     const [oldGameState, setOldGameState] = useState();
@@ -42,7 +43,8 @@ const useGame = () => {
             const controller = new AbortController();
 
             chessAPI.post('/suggest-move', {
-                'fen': game.fen()
+                'fen': game.fen(),
+                'skill_level': Math.round(skillLevel * 20)
             }, {
                 signal: controller.signal
             }).then(response => {
@@ -69,7 +71,7 @@ const useGame = () => {
             }
         }
 
-    }, [game, playerColor, playerColorFull, oldGameState])
+    }, [game, playerColor, playerColorFull, oldGameState, skillLevel])
 
     // The DOM has updated with the new chess board. It can now be animated.
     useEffect(() => {
@@ -129,7 +131,8 @@ const useGame = () => {
 
         try {
             const response = await chessAPI.post('/suggest-move', {
-                'fen': game.fen()
+                'fen': game.fen(),
+                'skill_level': 20
             })
 
             const result = response.data;
@@ -260,6 +263,7 @@ const useGame = () => {
         opponentStalemate: game && game.turn() !== playerColor && game.in_stalemate(),
         playerStalemate: game && game.turn() === playerColor && game.in_stalemate(),
         isDrawGame: game && game.in_draw(),
+        skillLevel,
         resetGameHandler,
         undoMoveHandler,
         suggestMoveHandler,
@@ -267,6 +271,8 @@ const useGame = () => {
         pieceDroppedHandler,
         squareTappedHandler,
         isPieceMovableHandler,
+        setSkillLevel,
+        setPlayerColor
     }
 }
 

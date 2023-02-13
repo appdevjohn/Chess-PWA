@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import useGame from './hooks/useGame';
 import Game from './components/Game';
 import ResetBubbleArea from './components/ResetBubbleArea';
 import Drawer from './components/Drawer';
 import Toolbar from './components/Toolbar';
 import Slider from './components/Slider';
+import ColorPicker from './components/ColorPicker';
+import levelDescriptions from './util/levelDescriptions';
 
 function App() {
     const {
@@ -23,16 +24,17 @@ function App() {
         opponentStalemate,
         playerStalemate,
         isDrawGame,
+        skillLevel,
         resetGameHandler,
         undoMoveHandler,
         suggestMoveHandler,
         showPreviousMoveHandler,
         pieceDroppedHandler,
         squareTappedHandler,
-        isPieceMovableHandler
+        isPieceMovableHandler,
+        setSkillLevel,
+        setPlayerColor
     } = useGame();
-
-    const [difficulty, setDifficulty] = useState(0.5);
 
     return (
         <div className='relative'>
@@ -63,7 +65,11 @@ function App() {
                     undoMoveHandler={undoMoveHandler}
                     suggestMoveHandler={suggestMoveHandler}
                     showPreviousMoveHandler={showPreviousMoveHandler} />
-                <Slider value={difficulty} onChange={setDifficulty} />
+                <Slider 
+                    value={skillLevel} 
+                    onChange={setSkillLevel}
+                    labelText={`Level ${Math.round(skillLevel * 20)}: ${levelDescriptions[Math.round(skillLevel * 10)]}`} />
+                <ColorPicker color={playerColor} setColor={setPlayerColor} />
             </Drawer>
         </div>
     );

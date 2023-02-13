@@ -29,9 +29,29 @@ background-color: gray;
 position: absolute;
 cursor: grab;
 touch-action: none;
+overflow: visible;
 `
 
-const Slider = ({ value, onChange }) => {
+const LabelText = styled.div`
+text-align: center;
+color: gray;
+margin-bottom: 30px;
+`;
+
+// const LabelBubble = styled.div`
+// display: flex;
+// justify-content: center;
+// align-items: center;
+// height: 44px;
+// width: 150px;
+// background-color: white;
+// border: 1px solid black;
+// position: relative;
+// bottom: 52px;
+// left: calc(-75px + 22px);
+// `
+
+const Slider = ({ value, onChange, labelText }) => {
     const ref = useRef()
     const width = ref?.current?.getBoundingClientRect()['width']  // Width of the element.
 
@@ -40,24 +60,25 @@ const Slider = ({ value, onChange }) => {
         const elementWidth = currentTarget.clientWidth;
         const newPercent = (x - viewportPosition.x + dx - 22) / (elementWidth - 44);
 
-        onChange(() => {
-            if (newPercent > 1) {
-                return 1
-            } else if (newPercent < 0) {
-                return 0
-            } else {
-                return newPercent
-            }
-        })
+        if (newPercent > 1) {
+            onChange(1)
+        } else if (newPercent < 0) {
+            onChange(0)
+        } else {
+            onChange(newPercent)
+        }
     })
 
     return (
         <Container>
+            <LabelText>{labelText}</LabelText>
             <Bar ref={ref} {...bind()}>
                 <Mark
                     style={{
-                        left: value * (width-44)
-                    }} />
+                        left: `${value * (width - 44)}`
+                    }}>
+                        {/* <LabelBubble>{labelText}</LabelBubble> */}
+                </Mark>
             </Bar>
         </Container>
     )

@@ -64,12 +64,12 @@ const Drawer = ({ children, backgroundColor, borderRadius }) => {
                 borderTopLeftRadius: borderRadius || '0',
                 borderTopRightRadius: borderRadius || '0',
                 touchAction: 'none',
-                zIndex: '5',
+                zIndex: '10',
                 ...styles
             }}
             {...bind()}>
-                <DragBar />
-                {children}
+            <DragBar />
+            {children}
         </animated.div>
     )
 }
