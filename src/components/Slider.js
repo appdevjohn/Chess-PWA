@@ -38,19 +38,6 @@ color: gray;
 margin-bottom: 30px;
 `;
 
-// const LabelBubble = styled.div`
-// display: flex;
-// justify-content: center;
-// align-items: center;
-// height: 44px;
-// width: 150px;
-// background-color: white;
-// border: 1px solid black;
-// position: relative;
-// bottom: 52px;
-// left: calc(-75px + 22px);
-// `
-
 const Slider = ({ value, onChange, labelText }) => {
     const ref = useRef()
     const width = ref?.current?.getBoundingClientRect()['width']  // Width of the element.
@@ -75,9 +62,8 @@ const Slider = ({ value, onChange, labelText }) => {
             <Bar ref={ref} {...bind()}>
                 <Mark
                     style={{
-                        left: `${value * (width - 44)}`
+                        left: `${value * (width - 44)}px`
                     }}>
-                        {/* <LabelBubble>{labelText}</LabelBubble> */}
                 </Mark>
             </Bar>
         </Container>
